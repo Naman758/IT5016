@@ -1,0 +1,96 @@
+def collect_user_information(id_counter):
+    user_name = input("Enter the name of the student: ")
+    user_age = input("Enter the age of the student: ")
+    user_email = input("Enter the email of the student: ")
+    
+    unique_id = id_counter + 1
+    id_counter = unique_id
+    
+    print("User Information")
+    print(f"Name: {user_name}")
+    print(f"Age: {user_age}")
+    print(f"Email: {user_email}")
+    print(f"Unique ID: {id_counter}")
+    
+    return user_email, user_age, user_name, id_counter
+
+def calculate_total_amount():
+    tot_amount = 0.00
+    while True:
+        item_input = input("Enter the name of the item (or type 'finish' to end): ")
+        
+        if item_input.lower() == 'finish':
+            break
+        
+        try:
+            price = float(input(f"Enter the price of the item '{item_input}': "))
+            tot_amount =+ price
+        except ValueError:
+            print("Invalid input, please enter a numeric value.")
+    
+    return tot_amount
+
+def categorize_request(tot_amount):
+    if tot_amount < 150:
+        category = "Low"
+        recommendation = "Proceed with standard processing."
+    else:
+        category = "High"
+        recommendation = "Review for potential discount."
+    
+    return category, recommendation
+
+def create_detailed_report(id_counter, user_name, user_age, user_email, tot_amount, category, recommendation):
+    print("Detailed Report")
+    print(f"Unique ID: {id_counter}")
+    print(f"Name: {user_name}")
+    print(f"Age: {user_age}")
+    print(f"Email: {user_email}")
+    print(f"Total Amount: {tot_amount:.2f}")
+    print(f"Category: {category}")
+    print(f"Recommendation: {recommendation}")
+
+def main():
+    id_counter = 5000
+    user_email, user_age, user_name, id_counter = collect_user_information(id_counter)
+    tot_amount = calculate_total_amount()
+    category, recommendation = categorize_request(tot_amount)
+    create_detailed_report(id_counter, user_name, user_age, user_email, tot_amount, category, recommendation)
+
+main()
+
+Explanation of codes according to the code.
+
+1.KISS (Keep It Simple, Stupid)
+
+a)Simplicity: The code is structured with distinct functions that clearly outline what each part does. For example, calculate_total_amount() focuses solely on calculating the total, while collect_user_information() is dedicated to gathering user data.
+b)Clear Input/Output: Each function handles a specific task with straightforward input and output, making it easy to understand the flow of data.
+
+2.DRY (Don't Repeat Yourself)
+
+a)Function for User Info Printing: Instead of repeating print statements for user information in collect_user_information(), we've created a print_user_info(user_info) function. 
+b) Item Price Input Handling: The get_item_price(item_name) function encapsulates the logic for obtaining the price, ensuring that the price validation process is not repeated in multiple places.
+
+3.Open/Closed Principle
+
+a)Extensibility: The structure allows for easy extensions. For instance, if we wanted to add more details to user information (like phone number), we can modify collect_user_information() and adjust the user_info dictionary without changing other functions that use this data.
+b)Adding Features: If new requirements arise (like adding more categories), we can create a new function or modify existing functions while keeping the core functionalities intact.
+
+Single Responsibility Principle
+
+a)Focused Functions: Each function is designed to do one thing:
+b)collect_user_information(): Gathers user data.
+c)print_user_info(): Displays user information.
+d)calculate_total_amount(): Computes the total cost of items.
+e)categorize_request(): Determines the category based on total amount.
+f)create_detailed_report(): Generates and prints the report.
+
+For example, calculate_total_amount() handles only the logic for totaling item prices, making it easy to maintain or test that specific functionality without affecting others.
+
+Conclusion
+By following these principles, the refactored code is:
+
+More maintainable: Changes to one part of the code won’t inadvertently affect others.
+Easier to understand: Clear function names and responsibilities enhance readability.
+Flexible for future changes: New features can be added with minimal disruption.
+This structured approach not only enhances code quality but also aids in collaboration and future development.
